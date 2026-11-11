@@ -1,0 +1,17 @@
+Plaintext
+# Logs and traces
+*.log
+*.trc
+*.trm
+
+# Export/Import and dump files
+*.dmp
+*.log
+*.par
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
