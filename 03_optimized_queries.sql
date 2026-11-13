@@ -18,7 +18,7 @@ SELECT
     customer_id,
     total_cost,
     status
-FROM inventory_allocations
+FROM tab_inventory_alloc
 WHERE allocation_date >= TO_DATE('2025-05-15', 'YYYY-MM-DD')
   AND allocation_date <  TO_DATE('2025-05-16', 'YYYY-MM-DD')
   AND customer_id BETWEEN 1000 AND 15000;
@@ -37,8 +37,8 @@ SELECT
     a.allocated_qty,
     a.total_cost,
     p.client_name
-FROM inventory_allocations a
-JOIN client_projects p 
+FROM tab_inventory_alloc a
+JOIN TAB_CLIENT_PROJECTS p 
   ON a.project_id = p.project_id 
  AND a.customer_id = p.customer_id
 WHERE a.allocation_date >= TO_DATE('2025-03-01', 'YYYY-MM-DD')
@@ -59,7 +59,7 @@ SELECT
     category,
     unit_price,
     stock_qty
-FROM design_inventories
+FROM TAB_DESIGN_INVENTORIES
 WHERE item_name LIKE 'DESIGNER COMPONENT%';
 
 
@@ -77,11 +77,11 @@ SELECT
     a.allocated_qty,
     a.total_cost,
     a.allocation_date
-FROM inventory_allocations a
-JOIN client_projects p 
+FROM tab_inventory_alloc a
+JOIN TAB_CLIENT_PROJECTS p 
   ON a.project_id = p.project_id 
  AND a.customer_id = p.customer_id
-JOIN design_inventories i 
+JOIN TAB_DESIGN_INVENTORIES i 
   ON a.item_id = i.item_id
 WHERE a.status = 'INSTALLED'
   AND i.category = 'WOODWORK'
@@ -100,10 +100,10 @@ SELECT
     cp.customer_id,
     cp.client_name,
     cp.budget_amount
-FROM client_projects cp
+FROM TAB_CLIENT_PROJECTS cp
 WHERE NOT EXISTS (
     SELECT 1 
-    FROM inventory_allocations ia 
+    FROM tab_inventory_alloc ia 
     WHERE ia.project_id = cp.project_id
       AND ia.customer_id = cp.customer_id
       AND ia.status = 'RETURNED'
